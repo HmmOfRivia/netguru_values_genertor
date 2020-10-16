@@ -28,7 +28,7 @@ class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
               showFavourites: (_) {
                 _quotesRepository.updateQuote(quote.quote.copyWith(isFavourite: false));
                 add(FavouritesEvent.loadFavourites());
-                }, 
+                },
               nothingToShow: (_) {});
         },
         loadFavourites: (_) async* {
@@ -36,6 +36,5 @@ class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
             return quotes.isEmpty ? FavouritesState.nothingToShow()
                 : FavouritesState.showFavourites(quotes);});
         });
-
   }
 }

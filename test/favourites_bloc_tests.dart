@@ -26,7 +26,7 @@ void main() {
     });
 
     blocTest(
-      "Should emit showFavourites when loadFavourites triggered",
+      "Emit showFavourites with quote from repository as argument when loadFavourites triggered",
       build: () async {
         when(mockQuotesRepository.getFavouritesList())
             .thenAnswer((_) async => [testQuote]);
@@ -38,9 +38,8 @@ void main() {
       ],
     );
 
-    blocTest("Delete favourite",
+    blocTest("Emit nothingToDisplay state when method returns emptyList",
         build: () async {
-          //when(mockQuotesRepository.updateQuote(testQuote));
           when(mockQuotesRepository.getFavouritesList())
               .thenAnswer((_) async => List());
 
