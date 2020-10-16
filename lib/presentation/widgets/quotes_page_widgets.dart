@@ -27,6 +27,7 @@ Widget bottomAppbar(context) {
 
 Widget quoteCard(BuildContext context, QuotesState state) {
   return AnimatedSwitcher(
+      key: Key('AnimatedSwitcher'),
       duration: Duration(seconds: 1),
       transitionBuilder: (Widget child, Animation<double> animation) {
         return SlideTransition(

@@ -5,26 +5,39 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:netguru_values_genertor/blocs/quotes_page_bloc/quotes_bloc.dart';
+import 'package:mockito/mockito.dart';
+import 'package:netguru_values_genertor/presentation/quotes_page.dart';
 
-import 'package:netguru_values_genertor/main.dart';
+class QuotesBlocMock extends MockBloc<QuotesEvent, QuotesState> implements QuotesBloc{}
 
-void main() {
-  /*testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+void main() async {
+  QuotesBlocMock _quotesBloc;
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  Widget makeTestableWidget() {
+    return BlocProvider<QuotesBloc>(
+      create: (context) => _quotesBloc,
+      child: MaterialApp(
+          home: Scaffold(
+            body: QuotePage(),
+          )),
+    );
+  }
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  setUp(() {
+    _quotesBloc = QuotesBlocMock();
+  });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });*/
+  testWidgets('Show AnimatedSwitcher when QuotesBloc return initial state',
+          (WidgetTester tester) async {
+
+        when(_quotesBloc.state).thenReturn(QuotesState.initial());
+
+        await tester.pumpWidget(makeTestableWidget());
+        expect(find.byKey(Key('AnimatedSwitcher')), findsOneWidget);
+      });
 }
