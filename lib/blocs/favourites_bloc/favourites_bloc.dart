@@ -26,15 +26,21 @@ class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
           state.map(
               initial: (_) {},
               showFavourites: (_) {
-                _quotesRepository.updateQuote(quote.quote.copyWith(isFavourite: false));
-                add(FavouritesEvent.loadFavourites());
+                _quotesRepository.updateQuote(quote.quote.copyWith(isFavourite: false)).then((value) =>
+                    value.fold(
+                            (l) => print(l),
+                            (_) => add(FavouritesEvent.loadFavourites()))
+                );
                 },
               nothingToShow: (_) {});
         },
         loadFavourites: (_) async* {
           yield await _quotesRepository.getFavouritesList().then((quotes) {
-            return quotes.isEmpty ? FavouritesState.nothingToShow()
-                : FavouritesState.showFavourites(quotes);});
+            return quotes.fold(
+                    (l) => FavouritesState.nothingToShow(),
+                    (r) => r.isEmpty ? FavouritesState.nothingToShow()
+                        : FavouritesState.showFavourites(r));
+            });
         });
   }
 }

@@ -22,12 +22,18 @@ class SavedPageBloc extends Bloc<SavedPageEvent, SavedPageState> {
   ) async* {
     yield* event.map(
         deleteItem: (id) async* {
-          await _quotesRepository.deleteQuote(id.id);
-          add(SavedPageEvent.loadAllQuotes());
+          await _quotesRepository.deleteQuote(id.id).then((value) =>
+              value.fold(
+                      (l) => print(l),
+                      (r) => add(SavedPageEvent.loadAllQuotes())));
+
         },
         loadAllQuotes: (_) async* {
-          yield await _quotesRepository.getAllQuotes().then(
-                  (quotes) => quotes.isEmpty ? SavedPageState.nothingToShow()
-                      : SavedPageState.showAllQuotes(quotes));});
+          yield await _quotesRepository.getAllQuotes().then((quotes) =>
+              quotes.fold(
+                      (l) => SavedPageState.nothingToShow(),
+                      (r) => r.isEmpty ? SavedPageState.nothingToShow()
+                          : SavedPageState.showAllQuotes(r)));
+              });
   }
 }

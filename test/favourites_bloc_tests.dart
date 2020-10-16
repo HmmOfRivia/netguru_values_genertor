@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:dartz/dartz.dart';
 import 'package:netguru_values_genertor/blocs/favourites_bloc/favourites_bloc.dart';
 import 'package:netguru_values_genertor/domain/Quote.dart';
 import 'package:netguru_values_genertor/infrastructure/repository.dart';
@@ -29,7 +30,7 @@ void main() {
       "Emit showFavourites with quote from repository as argument when loadFavourites triggered",
       build: () async {
         when(mockQuotesRepository.getFavouritesList())
-            .thenAnswer((_) async => [testQuote]);
+            .thenAnswer((_) async => right([testQuote]));
         return FavouritesBloc(mockQuotesRepository);
       },
       act: (bloc) => bloc.add(FavouritesEvent.loadFavourites()),
@@ -41,7 +42,7 @@ void main() {
     blocTest("Emit nothingToDisplay state when method returns emptyList",
         build: () async {
           when(mockQuotesRepository.getFavouritesList())
-              .thenAnswer((_) async => List());
+              .thenAnswer((_) async => right(List()));
 
           return FavouritesBloc(mockQuotesRepository);
         },

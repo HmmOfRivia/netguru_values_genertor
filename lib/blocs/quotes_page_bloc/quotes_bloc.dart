@@ -25,7 +25,11 @@ class QuotesBloc extends Bloc<QuotesEvent, QuotesState> {
     yield* event.map(
         requestQuote: (_) async* {
           yield await _quotesRepository.getRandomQuote().then((quote) =>
-              state.copyWith(quote: quote, changeQuote: false));
+              quote.fold(
+                      (l) => state.copyWith(changeQuote: false),
+                      (r) => state.copyWith(quote: r, changeQuote: false)
+              )
+          );
 
           Future.delayed(Duration(seconds: 5), () {
             if (!state.showAddQuoteDialog) add(QuotesEvent.displayNewQuote());});
@@ -46,8 +50,11 @@ class QuotesBloc extends Bloc<QuotesEvent, QuotesState> {
         },
         submitQuote: (quote) async* {
           yield state.copyWith(showAddQuoteDialog: false);
-          await _quotesRepository.createQuote(quote.quote);
-          add(QuotesEvent.displayNewQuote());
+          await _quotesRepository.createQuote(quote.quote).then(
+                  (value) => value.fold(
+                          (left) => print(left) ,
+                          (right) => add(QuotesEvent.displayNewQuote())));
+
         },
         cancelSubmitQuote: (_) async* {
           yield state.copyWith(showAddQuoteDialog: false);
