@@ -14,10 +14,7 @@ part 'saved_page_bloc.freezed.dart';
 @injectable
 class SavedPageBloc extends Bloc<SavedPageEvent, SavedPageState> {
   QuotesRepository _quotesRepository;
-  SavedPageBloc(this._quotesRepository);
-
-  @override
-  SavedPageState get initialState => SavedPageState.initial();
+  SavedPageBloc(this._quotesRepository) : assert(_quotesRepository != null), super(SavedPageState.initial());
 
   @override
   Stream<SavedPageState> mapEventToState(
@@ -30,7 +27,7 @@ class SavedPageBloc extends Bloc<SavedPageEvent, SavedPageState> {
         },
         loadAllQuotes: (_) async* {
           yield await _quotesRepository.getAllQuotes().then(
-                  (quotes) => quotes.isEmpty ? SavedPageState.initial()
+                  (quotes) => quotes.isEmpty ? SavedPageState.nothingToShow()
                       : SavedPageState.showAllQuotes(quotes));});
   }
 }

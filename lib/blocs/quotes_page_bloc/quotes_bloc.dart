@@ -16,10 +16,7 @@ part 'quotes_bloc.freezed.dart';
 @injectable
 class QuotesBloc extends Bloc<QuotesEvent, QuotesState> {
   QuotesRepository _quotesRepository;
-  QuotesBloc(this._quotesRepository);
-
-  @override
-  QuotesState get initialState => QuotesState.initial();
+  QuotesBloc(this._quotesRepository) : assert(_quotesRepository != null), super(QuotesState.initial());
 
   @override
   Stream<QuotesState> mapEventToState(

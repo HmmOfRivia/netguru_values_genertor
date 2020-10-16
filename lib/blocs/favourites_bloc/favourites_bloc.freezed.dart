@@ -218,12 +218,14 @@ mixin _$FavouritesState {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result showFavourites(List<Quote> quotes),
+    @required Result nothingToShow(),
   });
 
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result showFavourites(List<Quote> quotes),
+    Result nothingToShow(),
     @required Result orElse(),
   });
 
@@ -231,12 +233,14 @@ mixin _$FavouritesState {
   Result map<Result extends Object>({
     @required Result initial(Initial value),
     @required Result showFavourites(ShowFavourites value),
+    @required Result nothingToShow(NothingToShow value),
   });
 
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(Initial value),
     Result showFavourites(ShowFavourites value),
+    Result nothingToShow(NothingToShow value),
     @required Result orElse(),
   });
 }
@@ -252,6 +256,10 @@ class _$FavouritesStateTearOff {
     return ShowFavourites(
       quotes,
     );
+  }
+
+  NothingToShow nothingToShow() {
+    return NothingToShow();
   }
 }
 
@@ -278,9 +286,11 @@ class _$Initial implements Initial {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result showFavourites(List<Quote> quotes),
+    @required Result nothingToShow(),
   }) {
     assert(initial != null);
     assert(showFavourites != null);
+    assert(nothingToShow != null);
     return initial();
   }
 
@@ -289,6 +299,7 @@ class _$Initial implements Initial {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result showFavourites(List<Quote> quotes),
+    Result nothingToShow(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -303,9 +314,11 @@ class _$Initial implements Initial {
   Result map<Result extends Object>({
     @required Result initial(Initial value),
     @required Result showFavourites(ShowFavourites value),
+    @required Result nothingToShow(NothingToShow value),
   }) {
     assert(initial != null);
     assert(showFavourites != null);
+    assert(nothingToShow != null);
     return initial(this);
   }
 
@@ -314,6 +327,7 @@ class _$Initial implements Initial {
   Result maybeMap<Result extends Object>({
     Result initial(Initial value),
     Result showFavourites(ShowFavourites value),
+    Result nothingToShow(NothingToShow value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -365,9 +379,11 @@ class _$ShowFavourites implements ShowFavourites {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result showFavourites(List<Quote> quotes),
+    @required Result nothingToShow(),
   }) {
     assert(initial != null);
     assert(showFavourites != null);
+    assert(nothingToShow != null);
     return showFavourites(quotes);
   }
 
@@ -376,6 +392,7 @@ class _$ShowFavourites implements ShowFavourites {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result showFavourites(List<Quote> quotes),
+    Result nothingToShow(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -390,9 +407,11 @@ class _$ShowFavourites implements ShowFavourites {
   Result map<Result extends Object>({
     @required Result initial(Initial value),
     @required Result showFavourites(ShowFavourites value),
+    @required Result nothingToShow(NothingToShow value),
   }) {
     assert(initial != null);
     assert(showFavourites != null);
+    assert(nothingToShow != null);
     return showFavourites(this);
   }
 
@@ -401,6 +420,7 @@ class _$ShowFavourites implements ShowFavourites {
   Result maybeMap<Result extends Object>({
     Result initial(Initial value),
     Result showFavourites(ShowFavourites value),
+    Result nothingToShow(NothingToShow value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -417,4 +437,81 @@ abstract class ShowFavourites implements FavouritesState {
   List<Quote> get quotes;
 
   ShowFavourites copyWith({List<Quote> quotes});
+}
+
+class _$NothingToShow implements NothingToShow {
+  _$NothingToShow();
+
+  @override
+  String toString() {
+    return 'FavouritesState.nothingToShow()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is NothingToShow);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initial(),
+    @required Result showFavourites(List<Quote> quotes),
+    @required Result nothingToShow(),
+  }) {
+    assert(initial != null);
+    assert(showFavourites != null);
+    assert(nothingToShow != null);
+    return nothingToShow();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initial(),
+    Result showFavourites(List<Quote> quotes),
+    Result nothingToShow(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (nothingToShow != null) {
+      return nothingToShow();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initial(Initial value),
+    @required Result showFavourites(ShowFavourites value),
+    @required Result nothingToShow(NothingToShow value),
+  }) {
+    assert(initial != null);
+    assert(showFavourites != null);
+    assert(nothingToShow != null);
+    return nothingToShow(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initial(Initial value),
+    Result showFavourites(ShowFavourites value),
+    Result nothingToShow(NothingToShow value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (nothingToShow != null) {
+      return nothingToShow(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class NothingToShow implements FavouritesState {
+  factory NothingToShow() = _$NothingToShow;
 }

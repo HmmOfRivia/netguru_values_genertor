@@ -5,7 +5,6 @@ import 'package:injectable/injectable.dart';
 import 'package:netguru_values_genertor/presentation/quotes_page.dart';
 
 import 'blocs/quotes_page_bloc/quotes_bloc.dart';
-import 'infrastructure/repository.dart';
 import 'injection_config.dart';
 
 void main() {

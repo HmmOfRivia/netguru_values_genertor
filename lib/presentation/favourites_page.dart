@@ -17,6 +17,8 @@ class FavouritesPage extends StatelessWidget {
           builder: (ctx, state) {
             return state.map(
                 initial: (_) {
+                  return Container();},
+                nothingToShow: (_) {
                   return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,

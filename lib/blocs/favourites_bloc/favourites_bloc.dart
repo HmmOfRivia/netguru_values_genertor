@@ -15,10 +15,7 @@ part 'favourites_bloc.freezed.dart';
 @injectable
 class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
   QuotesRepository _quotesRepository;
-  FavouritesBloc(this._quotesRepository);
-
-  @override
-  FavouritesState get initialState => FavouritesState.initial();
+  FavouritesBloc(this._quotesRepository) : assert(_quotesRepository != null), super(FavouritesState.initial());
 
   @override
   Stream<FavouritesState> mapEventToState(
@@ -31,11 +28,12 @@ class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
               showFavourites: (_) {
                 _quotesRepository.updateQuote(quote.quote.copyWith(isFavourite: false));
                 add(FavouritesEvent.loadFavourites());
-                });
+                }, 
+              nothingToShow: (_) {});
         },
         loadFavourites: (_) async* {
           yield await _quotesRepository.getFavouritesList().then((quotes) {
-            return quotes.isEmpty ? FavouritesState.initial()
+            return quotes.isEmpty ? FavouritesState.nothingToShow()
                 : FavouritesState.showFavourites(quotes);});
         });
 

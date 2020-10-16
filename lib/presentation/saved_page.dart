@@ -4,7 +4,6 @@ import 'package:netguru_values_genertor/blocs/saved_page/bloc/saved_page_bloc.da
 import 'package:netguru_values_genertor/presentation/widgets/saved_page_widgets.dart';
 import 'package:netguru_values_genertor/injection_config.dart';
 
-
 class SavedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -17,13 +16,15 @@ class SavedPage extends StatelessWidget {
             getIt<SavedPageBloc>()..add(SavedPageEvent.loadAllQuotes()),
         child: BlocBuilder<SavedPageBloc, SavedPageState>(
           builder: (ctx, state) {
-            return state.map(initial: (_) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }, showAllQuotes: (e) {
-              return buildSavedListView(e, ctx);
-            });
+            return state.map(
+                initial: (_) {
+                  return Container();},
+                showAllQuotes: (e) {
+                  return buildSavedListView(e, ctx);
+                  },
+                nothingToShow: (_) { return Center(
+                  child: CircularProgressIndicator(),
+                );});
           },
         ),
       ),
